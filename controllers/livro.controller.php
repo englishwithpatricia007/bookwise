@@ -1,10 +1,5 @@
 <?php
 
-$id = $_REQUEST['id'];
-$db = new DB();
-$livro = $db->livro($id); // Assuming livro returns an array with one Livro object
+$livro = (new DB)->livro($_REQUEST['id']);
 
-
-
-// view('livro', compact('livro'));
 view('livro', compact('livro'));

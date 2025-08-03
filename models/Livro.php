@@ -5,23 +5,20 @@ class Livro {
     public $titulo;
     public $autor;
     public $descricao;
+    public $ano_de_lancamento;
     public $usuario_id;
 
-    public function __construct($id, $titulo, $autor, $descricao, $usuario_id) {
-        $this->id = $id;
-        $this->titulo = $titulo;
-        $this->autor = $autor;
-        $this->descricao = $descricao;
-        $this->usuario_id = $usuario_id;
-    }
+    // public static function make($data) {
+    //     $livro = new self();
 
-    public static function make($data) {
-        $obj = new Livro($data['id'],
-            $data['titulo'],
-            $data['autor'],
-            $data['descricao'],
-            usuario_id: $data['usuario_id']);
-        return $obj;
-    }
+    //     $livro->id = $data['id'];
+    //     $livro->titulo = $data['titulo'];
+    //     $livro->autor = $data['autor'];
+    //     $livro->descricao = $data['descricao'];
+    //     $livro->ano_de_lancamento = $data['ano_de_lancamento'];
+    //     $livro->usuario_id = $data['usuario_id'];
+        
+    //     return $livro;
+    // }
     
 }
