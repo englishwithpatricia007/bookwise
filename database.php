@@ -7,26 +7,31 @@ class DB
         $this->db = new PDO('sqlite:database.sqlite');
     }
 
-    public function livros($pesquisa = '')
+    public function livros($pesquisa = null)
     {
         $prepare = $this->db->prepare(
              "SELECT * FROM livros where 
              usuario_id = 1 and titulo like :pesquisa"
          );
 
-        $prepare->bindValue(':pesquisa', "$pesquisa%");
-        $prepare->execute();
-        $items = $prepare->fetchAll();
+        $prepare->bindValue(':pesquisa', "%$pesquisa%");
+        $prepare->setFetchMode(PDO::FETCH_CLASS, Livro::class);
 
-        return array_map(fn($item) => Livro::make($item), $items);
+        $prepare->execute();
+
+        return $prepare->fetchAll();
     }
 
     public function livro($id)
     {
-        $sql = "SELECT * FROM livros";
-        $sql .= " where id =" . $id;
-        $query = $this->db->query($sql);
-        $item = $query->fetch();
-        return Livro::make($item);
+        $prepare = $this->db->prepare(
+            "SELECT * FROM livros WHERE id = :id"
+        );
+        $prepare->bindParam(':id', $id);
+        $prepare->setFetchMode(PDO::FETCH_CLASS, Livro::class);
+
+        $prepare->execute();
+
+        return $prepare->fetch();
     }
 }
