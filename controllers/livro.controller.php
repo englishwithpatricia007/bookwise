@@ -1,12 +1,10 @@
 <?php
 
-require 'dados.php';
-
 $id = $_REQUEST['id'];
+$db = new DB();
+$livro = $db->livro($id); // Assuming livro returns an array with one Livro object
 
-$filtrado = array_filter($livros, fn($l) =>  $l['id'] == $id);
 
-$livro = array_pop($filtrado);
 
 // view('livro', compact('livro'));
-view('livro', ['livro' => $livro]);
+view('livro', compact('livro'));
