@@ -9,19 +9,15 @@ class DB
 
     public function livros($pesquisa = '')
     {
-        // $prepare = $this->db->prepare(
-        //     "SELECT * FROM livros where 
-        //     usuario_id = 1 and titulo like '%:pesquisa%'"
-        // );
-        // $prepare->bindColumn("pesquisa", $pesquisa);
-        // $prepare->execute();
+        $prepare = $this->db->prepare(
+             "SELECT * FROM livros where 
+             usuario_id = 1 and titulo like :pesquisa"
+         );
 
-        $sql =  "SELECT * FROM livros where 
-                usuario_id = 1 and titulo like '%$pesquisa%'";
+        $prepare->bindValue(':pesquisa', "$pesquisa%");
+        $prepare->execute();
+        $items = $prepare->fetchAll();
 
-        echo $sql . "<br>";
-        $query = $this->db->query($sql);
-        $items = $query->fetchAll();
         return array_map(fn($item) => Livro::make($item), $items);
     }
 
