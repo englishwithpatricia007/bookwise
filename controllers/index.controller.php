@@ -2,7 +2,7 @@
 
 $pesquisar = $_REQUEST['pesquisar'] ?? '';
 
-$livros = (new DB)->query(
+$livros = $DB->query(
     "SELECT * FROM livros where titulo like :filtro",
     Livro::class, 
     ["filtro"=> "%$pesquisar%"])->fetchAll();
